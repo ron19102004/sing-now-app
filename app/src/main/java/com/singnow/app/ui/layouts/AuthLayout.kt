@@ -21,45 +21,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.singnow.app.ui.components.TopBarContainer
 
 open class AuthLayout {
     @Composable
-    fun Layout(title: String? = null, content: @Composable () -> Unit) {
-        val heightTopBar: Dp = 52.dp
-        Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 26.dp)
-                    .height(heightTopBar)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(heightTopBar),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            imageVector = Icons.Sharp.ArrowBack, contentDescription = null
-                        )
-                    }
-                }
-                title?.let {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(heightTopBar),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = it)
-                    }
-                }
-            }
-        }) {
-            Column(modifier = Modifier.padding(it)) {
+    fun Layout(
+        modifier: Modifier = Modifier,
+        title: String? = null,
+        content: @Composable () -> Unit
+    ) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = { TopBarContainer(title) }
+        ) {
+            Column(modifier = modifier.padding(it)) {
                 content()
             }
         }

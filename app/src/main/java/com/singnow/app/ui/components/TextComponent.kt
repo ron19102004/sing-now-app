@@ -3,6 +3,8 @@ package com.singnow.app.ui.components
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import com.singnow.app.configs.Constant
@@ -10,13 +12,18 @@ import com.singnow.app.configs.Constant
 @Composable
 fun Heading(
     value: String,
-    size: TextUnit = Constant.TextSize.MD
+    size: TextUnit = Constant.TextSize.LG,
+    fontWeight: FontWeight = FontWeight.Bold,
+    fontStyle: FontStyle = FontStyle.Normal,
+    textStyle: TextStyle = TextStyle(
+        fontSize = size,
+        fontWeight = fontWeight,
+        fontStyle = fontStyle
+    )
 ) {
     Text(
         text = value,
-        style = TextStyle(
-            fontSize = size
-        )
+        style = textStyle
     )
 }
 

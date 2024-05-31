@@ -9,11 +9,12 @@ import com.singnow.app.ui.NavigationBarBottomContainer
 
 open class MainLayout {
     @Composable
-    fun Layout(content: @Composable () -> Unit) {
+    fun Layout(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
         Scaffold(
+            modifier = Modifier,
             bottomBar = { NavigationBarBottomContainer() }
         ) {
-            Column(modifier = Modifier.padding(it)) {
+            Column(modifier = modifier.padding(it)) {
                 content()
             }
         }
