@@ -24,10 +24,12 @@ fun TextBtn(
     modifier: Modifier = Modifier.fillMaxWidth(),
     height: Dp = 68.dp,
     backgroundColor: Color = MaterialTheme.colorScheme.onBackground,
+    textColor:Color = MaterialTheme.colorScheme.inversePrimary,
     textStyle: TextStyle = TextStyle(
         fontStyle = FontStyle.Normal,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
+        color = textColor
     )
 ) {
     TextButton(

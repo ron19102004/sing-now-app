@@ -30,6 +30,7 @@ fun Input(
         fontSize = 18.sp
     ),
     isError: Boolean = false,
+    errorMessage: String? = null,
     isPassword: Boolean = false
 ) {
     OutlinedTextField(
@@ -38,8 +39,12 @@ fun Input(
         modifier = modifier.height(height),
         placeholder = placeholder,
         label = {
-            label?.let {
-                Text(text = it)
+            if (!errorMessage.isNullOrBlank()) {
+                Text(text = errorMessage)
+            } else {
+                label?.let {
+                    Text(text = it)
+                }
             }
         },
         singleLine = singleLine,

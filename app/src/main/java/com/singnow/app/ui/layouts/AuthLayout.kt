@@ -28,13 +28,21 @@ open class AuthLayout {
     fun Layout(
         modifier: Modifier = Modifier,
         title: String? = null,
-        content: @Composable () -> Unit
+        verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+        horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+        content: @Composable () -> Unit,
     ) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBarContainer(title) }
         ) {
-            Column(modifier = modifier.padding(it)) {
+            Column(
+                modifier = modifier
+                    .padding(it)
+                    .fillMaxSize(),
+                horizontalAlignment = horizontalAlignment,
+                verticalArrangement = verticalArrangement
+            ) {
                 content()
             }
         }

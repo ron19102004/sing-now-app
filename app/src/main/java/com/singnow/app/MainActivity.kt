@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.firebase.FirebaseApp
 import com.singnow.app.states.objects.InitializationState
 import com.singnow.app.ui.RouterSetup
 import com.singnow.app.ui.theme.SingNowTheme
@@ -22,8 +23,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        FirebaseApp.initializeApp(this)
         setContent {
-            InitializationState.start()
+            InitializationState.start(this)
             SingNowTheme {
                 Box(
                     modifier = Modifier
