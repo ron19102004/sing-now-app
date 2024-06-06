@@ -10,7 +10,7 @@ object Constant{
         val XL = 40.sp
         val XXL = 50.sp
     }
-    object SharedPrefereces{
+    object SharedPreferences{
         object Auth{
             val ROOT = "auth"
             val IS_LOGGED_IN = "is_logged_in"

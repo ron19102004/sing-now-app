@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.singnow.app.states.objects.InitializationState
 
 @Composable
-fun TopBarContainer(title: String? = null) {
+fun TopBarContainer(title: String? = null, isDisplayBackIcon: Boolean = true) {
     val heightTopBar: Dp = 52.dp
     Box(
         modifier = Modifier
@@ -26,19 +26,21 @@ fun TopBarContainer(title: String? = null) {
             .padding(top = 26.dp)
             .height(heightTopBar)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(heightTopBar),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = {
-                InitializationState.navController.popBackStack()
-            }) {
-                Icon(
-                    imageVector = Icons.Sharp.ArrowBack, contentDescription = null
-                )
+        if (isDisplayBackIcon) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(heightTopBar),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = {
+                    InitializationState.navController.popBackStack()
+                }) {
+                    Icon(
+                        imageVector = Icons.Sharp.ArrowBack, contentDescription = null
+                    )
+                }
             }
         }
         title?.let {

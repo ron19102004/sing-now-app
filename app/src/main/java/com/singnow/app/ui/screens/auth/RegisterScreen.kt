@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.singnow.app.R
@@ -62,20 +63,14 @@ class RegisterScreen : AuthLayout() {
         val toast: (String) -> Unit = {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
-        authViewModel.register(
-            data = User(
-                "dung@gmail.com",
-                "dung2004",
-                "Dung",
-                "Nguyen"
-            ),
-            error = {},
-            success = {
-                toast("Register Success")
-                Navigate(Router.HomeScreen)
-            }
-        )
-        if (email.value.isNotBlank() && password.value.isNotBlank() && password.value.length >= 8) {
+        if (email.value.isNotBlank() &&
+            password.value.isNotBlank() &&
+            firstName.value.isNotBlank() &&
+            lastName.value.isNotBlank() &&
+            rePassword.value.isNotBlank() &&
+            password.value.length >= 8 &&
+            rePassword.value == password.value
+        ) {
             authViewModel.register(
                 data = User(
                     email.value,
@@ -98,9 +93,26 @@ class RegisterScreen : AuthLayout() {
         if (password.value.isEmpty()) {
             isErrorPassword.value = true
             errorPassword.value = "Password is required"
-        } else if (password.value.length < 8) {
+        }
+        if (password.value.length < 8) {
             isErrorPassword.value = true
             errorPassword.value = "Password must be at least 8 characters"
+        }
+        if (firstName.value.isEmpty()) {
+            isErrorFirstName.value = true
+            errorFirstName.value = "First name is required"
+        }
+        if (lastName.value.isEmpty()) {
+            isErrorLastName.value = true
+            errorLastName.value = "Last name is required"
+        }
+        if (rePassword.value.isEmpty()) {
+            isErrorRePassword.value = true
+            errorRePassword.value = "Re password is required"
+        }
+        if (rePassword.value != password.value) {
+            isErrorRePassword.value = true
+            errorRePassword.value = "Password not match"
         }
     }
 
@@ -178,6 +190,7 @@ class RegisterScreen : AuthLayout() {
         Input(
             value = email.value,
             onChangeValue = {
+                isErrorEmail.value = false
                 email.value = it
             },
             label = "Email",
@@ -188,6 +201,7 @@ class RegisterScreen : AuthLayout() {
         Input(
             value = firstName.value,
             onChangeValue = {
+                isErrorFirstName.value = false
                 firstName.value = it
             },
             label = "First name",
@@ -198,7 +212,8 @@ class RegisterScreen : AuthLayout() {
         Input(
             value = lastName.value,
             onChangeValue = {
-                firstName.value = it
+                isErrorLastName.value = false
+                lastName.value = it
             },
             label = "Last name",
             isError = isErrorLastName.value,
@@ -212,6 +227,7 @@ class RegisterScreen : AuthLayout() {
         Input(
             value = password.value,
             onChangeValue = {
+                isErrorPassword.value = false
                 password.value = it
             },
             label = "Password",
@@ -223,6 +239,7 @@ class RegisterScreen : AuthLayout() {
         Input(
             value = rePassword.value,
             onChangeValue = {
+                isErrorRePassword.value = false
                 rePassword.value = it
             },
             label = "Re password",
@@ -231,4 +248,9 @@ class RegisterScreen : AuthLayout() {
             errorMessage = errorRePassword.value
         )
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun RegisterScreenPreview() {
+    RegisterScreen().Screen()
 }

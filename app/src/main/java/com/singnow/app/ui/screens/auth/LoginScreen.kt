@@ -41,7 +41,7 @@ import com.singnow.app.ui.layouts.AuthLayout
 
 class LoginScreen : AuthLayout() {
     private lateinit var authViewModel: AuthViewModel
-    private var username = mutableStateOf("")
+    private var email = mutableStateOf("")
     private var password = mutableStateOf("")
     private var isErrorUsername = mutableStateOf(false)
     private var isErrorPassword = mutableStateOf(false)
@@ -55,10 +55,10 @@ class LoginScreen : AuthLayout() {
         val toast: (String) -> Unit = {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
-        if (username.value.isNotBlank() && password.value.isNotBlank() && password.value.length >= 8) {
+        if (email.value.isNotBlank() && password.value.isNotBlank() && password.value.length >= 8) {
             authViewModel.login(
                 data = LoginDto(
-                    username.value,
+                    email.value,
                     password.value
                 ),
                 startLoading = {
@@ -84,7 +84,7 @@ class LoginScreen : AuthLayout() {
             )
             return
         }
-        if (username.value.isEmpty()) {
+        if (email.value.isEmpty()) {
             isErrorUsername.value = true
             errorUsername.value = "Username is required"
         }
@@ -128,9 +128,9 @@ class LoginScreen : AuthLayout() {
                     }
                     Spacer(modifier = Modifier.height(30.dp))
                     Input(
-                        value = username.value,
+                        value = email.value,
                         onChangeValue = {
-                            username.value = it
+                            email.value = it
                         },
                         label = "Username",
                         isError = isErrorUsername.value,

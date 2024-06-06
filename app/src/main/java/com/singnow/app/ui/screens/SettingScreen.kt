@@ -7,8 +7,8 @@ import com.singnow.app.ui.layouts.MainLayout
 class SettingScreen : MainLayout() {
     @Composable
     fun Screen() {
-        Layout {
-            Text(text = "home")
+        Layout(title = "Setting") {
+
         }
     }
 }

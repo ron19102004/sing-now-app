@@ -26,12 +26,12 @@ class AuthViewModel : ViewModel() {
 
     fun init(context: Context) {
         sharedPreferences =
-            context.getSharedPreferences(Constant.SharedPrefereces.Auth.ROOT, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constant.SharedPreferences.Auth.ROOT, Context.MODE_PRIVATE)
         isLoggedIn.value =
-            sharedPreferences.getBoolean(Constant.SharedPrefereces.Auth.IS_LOGGED_IN, false)
+            sharedPreferences.getBoolean(Constant.SharedPreferences.Auth.IS_LOGGED_IN, false)
         if (isLoggedIn.value) {
             accountKey.value =
-                sharedPreferences.getString(Constant.SharedPrefereces.Auth.ACCOUNT_KEY, null)
+                sharedPreferences.getString(Constant.SharedPreferences.Auth.ACCOUNT_KEY, null)
             loadDataFirst(accountKey.value!!)
         }
     }
@@ -46,13 +46,14 @@ class AuthViewModel : ViewModel() {
                         val child = snapshot.children.firstOrNull()
                         if (child != null) {
                             val user: User? = child.getValue(User::class.java)
-
+                            if (user != null) {
+                                userCurrent.value = user
+                            }
                         }
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    error(error.message)
                 }
             })
         }
@@ -60,8 +61,8 @@ class AuthViewModel : ViewModel() {
 
     fun logout() {
         sharedPreferences.edit()
-            .putBoolean(Constant.SharedPrefereces.Auth.IS_LOGGED_IN, false)
-            .putString(Constant.SharedPrefereces.Auth.ACCOUNT_KEY, null)
+            .putBoolean(Constant.SharedPreferences.Auth.IS_LOGGED_IN, false)
+            .putString(Constant.SharedPreferences.Auth.ACCOUNT_KEY, null)
             .apply()
         isLoggedIn.value = false
         accountKey.value = null
@@ -92,11 +93,11 @@ class AuthViewModel : ViewModel() {
                                     accountKey.value = child.key
                                     sharedPreferences.edit()
                                         .putBoolean(
-                                            Constant.SharedPrefereces.Auth.IS_LOGGED_IN,
+                                            Constant.SharedPreferences.Auth.IS_LOGGED_IN,
                                             true
                                         )
                                         .putString(
-                                            Constant.SharedPrefereces.Auth.ACCOUNT_KEY,
+                                            Constant.SharedPreferences.Auth.ACCOUNT_KEY,
                                             accountKey.value
                                         )
                                         .apply()

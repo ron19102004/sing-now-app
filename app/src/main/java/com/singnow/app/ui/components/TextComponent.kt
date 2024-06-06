@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import com.singnow.app.configs.Constant
@@ -19,11 +20,14 @@ fun Heading(
         fontSize = size,
         fontWeight = fontWeight,
         fontStyle = fontStyle
-    )
+    ),
+    maxLines: Int = 1
 ) {
     Text(
         text = value,
-        style = textStyle
+        style = textStyle,
+        maxLines = maxLines,
+        overflow = TextOverflow.Ellipsis
     )
 }
 

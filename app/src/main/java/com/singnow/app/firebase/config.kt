@@ -9,4 +9,7 @@ object FirebaseConfig{
     fun accountsRef(): DatabaseReference {
         return database.child("accounts")
     }
+    fun videosRef(): DatabaseReference{
+        return database.child("videos")
+    }
 }

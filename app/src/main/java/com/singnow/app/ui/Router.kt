@@ -8,12 +8,19 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.lifecycle.asFlow
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
+import com.singnow.app.states.Video
 import com.singnow.app.states.objects.InitializationState
 import com.singnow.app.ui.screens.HomeScreen
+import com.singnow.app.ui.screens.MediaPlayerScreen
+import com.singnow.app.ui.screens.ProfileScreen
+import com.singnow.app.ui.screens.SearchScreen
 import com.singnow.app.ui.screens.SettingScreen
 import com.singnow.app.ui.screens.auth.LoginScreen
 import com.singnow.app.ui.screens.auth.RegisterScreen
@@ -38,11 +45,19 @@ sealed class Router {
 
     @Serializable
     data object RegisterScreen : Router()
+
+    @Serializable
+    data object SearchScreen : Router()
+
+    @Serializable
+    data class MediaPlayerScreen(
+        val videoKey: String
+    ) : Router()
 }
 
 @Composable
 fun RouterSetup(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Router.LoginScreen) {
+    NavHost(navController = navController, startDestination = Router.HomeScreen) {
         composable<Router.HomeScreen> {
             HomeScreen().Screen()
         }
@@ -54,6 +69,16 @@ fun RouterSetup(navController: NavHostController) {
         }
         composable<Router.RegisterScreen> {
             RegisterScreen().Screen()
+        }
+        composable<Router.SearchScreen> {
+            SearchScreen().Screen()
+        }
+        composable<Router.ProfileScreen> {
+            ProfileScreen().Screen()
+        }
+        composable<Router.MediaPlayerScreen> {
+            val args = it.toRoute<Router.MediaPlayerScreen>()
+            MediaPlayerScreen().Screen(videoKey = args.videoKey)
         }
     }
 }
@@ -77,7 +102,7 @@ fun Navigate(router: Router) {
 
 @Composable
 fun NavigationBarBottomContainer() {
-    val items = listOf(
+    val routers = listOf(
         Router.HomeScreen,
         Router.SettingScreen
     )
@@ -90,7 +115,7 @@ fun NavigationBarBottomContainer() {
         Icons.Sharp.Settings
     )
     NavigationBar {
-        items.forEachIndexed { index, router ->
+        routers.forEachIndexed { index, router ->
             NavigationBarItem(
                 selected = RouterState.index.intValue == index,
                 label = { Text(text = labels[index]) },
