@@ -166,9 +166,3 @@ class LoginScreen : AuthLayout() {
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen().Screen()
-}

@@ -59,14 +59,33 @@ class RegisterScreen : AuthLayout() {
     private var errorLastName = mutableStateOf("")
 
     private var step = mutableIntStateOf(0)
+    private fun nextButtonClick() {
+        if (email.value.isNotBlank() &&
+            firstName.value.isNotBlank() &&
+            lastName.value.isNotBlank()
+        ) {
+            step.intValue = 1
+            return
+        }
+        if (email.value.isEmpty()) {
+            isErrorEmail.value = true
+            errorEmail.value = "Username is required"
+        }
+        if (firstName.value.isEmpty()) {
+            isErrorFirstName.value = true
+            errorFirstName.value = "First name is required"
+        }
+        if (lastName.value.isEmpty()) {
+            isErrorLastName.value = true
+            errorLastName.value = "Last name is required"
+        }
+    }
+
     private fun onSignUpClick(context: Context) {
         val toast: (String) -> Unit = {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
-        if (email.value.isNotBlank() &&
-            password.value.isNotBlank() &&
-            firstName.value.isNotBlank() &&
-            lastName.value.isNotBlank() &&
+        if (password.value.isNotBlank() &&
             rePassword.value.isNotBlank() &&
             password.value.length >= 8 &&
             rePassword.value == password.value
@@ -86,10 +105,7 @@ class RegisterScreen : AuthLayout() {
             )
             return
         }
-        if (email.value.isEmpty()) {
-            isErrorEmail.value = true
-            errorEmail.value = "Username is required"
-        }
+
         if (password.value.isEmpty()) {
             isErrorPassword.value = true
             errorPassword.value = "Password is required"
@@ -97,14 +113,6 @@ class RegisterScreen : AuthLayout() {
         if (password.value.length < 8) {
             isErrorPassword.value = true
             errorPassword.value = "Password must be at least 8 characters"
-        }
-        if (firstName.value.isEmpty()) {
-            isErrorFirstName.value = true
-            errorFirstName.value = "First name is required"
-        }
-        if (lastName.value.isEmpty()) {
-            isErrorLastName.value = true
-            errorLastName.value = "Last name is required"
         }
         if (rePassword.value.isEmpty()) {
             isErrorRePassword.value = true
@@ -158,7 +166,7 @@ class RegisterScreen : AuthLayout() {
                     Spacer(modifier = Modifier.height(12.dp))
                     when (step.intValue) {
                         0 -> {
-                            TextBtn(value = "Next", onClick = { step.intValue = 1 })
+                            TextBtn(value = "Next", onClick = { nextButtonClick() })
                         }
 
                         1 -> {
@@ -248,9 +256,4 @@ class RegisterScreen : AuthLayout() {
             errorMessage = errorRePassword.value
         )
     }
-}
-@Preview(showBackground = true)
-@Composable
-fun RegisterScreenPreview() {
-    RegisterScreen().Screen()
 }
