@@ -8,15 +8,12 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.lifecycle.asFlow
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.singnow.app.states.Video
-import com.singnow.app.states.objects.InitializationState
+import com.singnow.app.navController
 import com.singnow.app.ui.screens.HomeScreen
 import com.singnow.app.ui.screens.MediaPlayerScreen
 import com.singnow.app.ui.screens.ProfileScreen
@@ -84,7 +81,7 @@ fun RouterSetup(navController: NavHostController) {
 }
 
 fun Navigate(router: Router) {
-    val navController: NavHostController = InitializationState.navController
+    val navController: NavHostController = navController
     when (router) {
         is Router.HomeScreen -> {
             RouterState.index.intValue = 0

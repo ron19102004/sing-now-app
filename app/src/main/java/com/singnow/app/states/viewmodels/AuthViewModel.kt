@@ -12,8 +12,10 @@ import com.singnow.app.configs.Constant
 import com.singnow.app.configs.hashPassword
 import com.singnow.app.configs.verifyPassword
 import com.singnow.app.firebase.FirebaseConfig
+import com.singnow.app.states.ChangePasswordDto
 import com.singnow.app.states.LoginDto
 import com.singnow.app.states.User
+import com.singnow.app.states.objects.AppState
 import kotlinx.coroutines.launch
 
 
@@ -23,7 +25,6 @@ class AuthViewModel : ViewModel() {
     val isLoggedIn = mutableStateOf(false)
     private val accountKey = mutableStateOf<String?>(null)
     private lateinit var sharedPreferences: SharedPreferences
-
     fun init(context: Context) {
         sharedPreferences =
             context.getSharedPreferences(Constant.SharedPreferences.Auth.ROOT, Context.MODE_PRIVATE)
@@ -133,6 +134,45 @@ class AuthViewModel : ViewModel() {
                 success()
             } catch (e: Exception) {
                 error(e.message.toString())
+            }
+        }
+    }
+
+    fun changePassword(
+        data: ChangePasswordDto,
+        passwordCurrentError: () -> Unit,
+        success: () -> Unit
+    ) {
+        viewModelScope.launch {
+            userCurrent.value.let { user ->
+                if (data.oldPassword != user?.password) {
+                    accountKey.value.let { key ->
+                        if (key != null) {
+                            val userNew = User(
+                                user?.email!!,
+                                data.newPassword,
+                                user.firstName,
+                                user.lastName
+                            )
+                            accountsRef.child(key).setValue(userNew)
+                            success()
+                            userCurrent.value = userNew
+                        }
+                    }
+                } else {
+                    passwordCurrentError()
+                }
+            }
+        }
+    }
+
+    fun changeInfor(user: User) {
+        viewModelScope.launch {
+            accountKey.value.let { key ->
+                if (key != null) {
+                    accountsRef.child(key).setValue(user)
+                    userCurrent.value = user
+                }
             }
         }
     }

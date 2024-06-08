@@ -1,6 +1,5 @@
 package com.singnow.app.ui.screens
 
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,12 +17,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.asFlow
-import com.singnow.app.states.User
-import com.singnow.app.states.Video
-import com.singnow.app.states.objects.InitializationState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.singnow.app.states.objects.AppState
 import com.singnow.app.states.viewmodels.AuthViewModel
 import com.singnow.app.states.viewmodels.VideoViewModel
 import com.singnow.app.ui.Navigate
@@ -40,8 +37,8 @@ class HomeScreen : MainLayout() {
 
     @Composable
     fun Screen(
-        authViewModel: AuthViewModel = InitializationState.authViewModel,
-        videoViewModel: VideoViewModel = InitializationState.videoViewModel,
+        authViewModel: AuthViewModel =  AppState.authViewModel,
+        videoViewModel: VideoViewModel =  viewModel(),
         scope: CoroutineScope = rememberCoroutineScope()
     ) {
         val user = authViewModel.userCurrent.value

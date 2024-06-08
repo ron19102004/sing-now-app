@@ -2,6 +2,7 @@ package com.singnow.app.states.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,7 @@ import com.google.firebase.database.ValueEventListener
 import com.singnow.app.firebase.FirebaseConfig
 import com.singnow.app.states.Video
 import com.singnow.app.states.VideoResponse
+import com.singnow.app.states.objects.AppState
 import kotlinx.coroutines.launch
 
 class VideoViewModel : ViewModel() {
@@ -24,11 +26,13 @@ class VideoViewModel : ViewModel() {
             "",
             "Unknown",
             "Unknown",
+            "",
             ""
         )
     )
+    val videosFindByName = MutableLiveData<List<Video>>()
 
-    fun init() {
+    init {
         fetchVideos()
     }
 
@@ -39,6 +43,7 @@ class VideoViewModel : ViewModel() {
                 "",
                 "Unknown",
                 "Unknown",
+                "",
                 ""
             )
             videosRef.child(key).get().addOnSuccessListener { snapshot ->
@@ -50,7 +55,8 @@ class VideoViewModel : ViewModel() {
                             it.image,
                             it.title,
                             it.description,
-                            it.url
+                            it.url,
+                            it.lyrics
                         )
                         Log.d("Firebase", "Video found with key: $key")
                     }
@@ -76,13 +82,48 @@ class VideoViewModel : ViewModel() {
                                 it.image,
                                 it.title,
                                 it.description,
-                                it.url
+                                it.url,
+                                it.lyrics
                             )
                         )
                     }
                 }
                 videosOnHome.value = videos
             }
+        }
+    }
+
+    fun findByName(name: String) {
+        viewModelScope.launch {
+            videosRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val videos = mutableListOf<Video>()
+                    if (snapshot.exists()) {
+                        for (child in snapshot.children) {
+                            val video = child.getValue(VideoResponse::class.java)
+                            if (video != null &&
+                                video.title.lowercase().contains(name.lowercase())
+                            ) {
+                                videos.add(
+                                    Video(
+                                        child.key!!,
+                                        video.image,
+                                        video.title,
+                                        video.description,
+                                        video.url,
+                                        video.lyrics
+                                    )
+                                )
+                            }
+                        }
+                    }
+                    videosFindByName.value = videos
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
         }
     }
 }

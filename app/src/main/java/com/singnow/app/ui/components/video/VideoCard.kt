@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -50,9 +52,13 @@ fun VideoCard(video: Video) {
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.Bottom
             ) {
-                TextButton(onClick = {
-                    Navigate(Router.MediaPlayerScreen(videoKey = video.key))
-                }, modifier = Modifier.padding(10.dp)) {
+                TextButton(
+                    onClick = {
+                        Navigate(Router.MediaPlayerScreen(videoKey = video.key))
+                    }, modifier = Modifier.padding(10.dp), colors = ButtonDefaults.textButtonColors(
+                        containerColor = MaterialTheme.colorScheme.onSecondary
+                    )
+                ) {
                     Icon(
                         imageVector = Icons.Default.PlayArrow,
                         contentDescription = null

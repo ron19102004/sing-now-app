@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -25,13 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.singnow.app.R
-import com.singnow.app.states.LoginDto
 import com.singnow.app.states.User
-import com.singnow.app.states.objects.InitializationState
+import com.singnow.app.states.objects.AppState
 import com.singnow.app.states.viewmodels.AuthViewModel
 import com.singnow.app.ui.Navigate
 import com.singnow.app.ui.Router
@@ -126,7 +123,7 @@ class RegisterScreen : AuthLayout() {
 
     @Composable
     fun Screen(
-        authViewModel: AuthViewModel = InitializationState.authViewModel,
+        authViewModel: AuthViewModel = AppState.authViewModel,
         context: Context = LocalContext.current
     ) {
         this.authViewModel = authViewModel

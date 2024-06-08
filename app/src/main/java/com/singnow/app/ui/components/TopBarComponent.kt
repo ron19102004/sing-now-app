@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.singnow.app.states.objects.InitializationState
+import com.singnow.app.navController
 
 @Composable
 fun TopBarContainer(title: String? = null, isDisplayBackIcon: Boolean = true) {
@@ -35,7 +35,7 @@ fun TopBarContainer(title: String? = null, isDisplayBackIcon: Boolean = true) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = {
-                    InitializationState.navController.popBackStack()
+                    navController.popBackStack()
                 }) {
                     Icon(
                         imageVector = Icons.Sharp.ArrowBack, contentDescription = null

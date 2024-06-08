@@ -3,9 +3,6 @@ package com.singnow.app.ui.screens
 import android.app.Activity
 import android.content.Context
 import android.content.pm.ActivityInfo
-import android.provider.MediaStore
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,10 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -33,12 +28,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.asFlow
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.singnow.app.configs.Constant
 import com.singnow.app.states.Video
-import com.singnow.app.states.objects.InitializationState
 import com.singnow.app.states.viewmodels.VideoViewModel
 import com.singnow.app.ui.components.Heading
 import com.singnow.app.ui.layouts.NotBottomLayout
@@ -49,7 +44,7 @@ class MediaPlayerScreen : NotBottomLayout() {
 
     @Composable
     fun Screen(
-        videoViewModel: VideoViewModel = InitializationState.videoViewModel, videoKey: String
+        videoViewModel: VideoViewModel = viewModel(), videoKey: String
     ) {
         LaunchedEffect(videoKey) {
             videoViewModel.findByVideoKey(videoKey)
