@@ -15,6 +15,7 @@ import com.singnow.app.firebase.FirebaseConfig
 import com.singnow.app.states.Video
 import com.singnow.app.states.VideoResponse
 import com.singnow.app.states.objects.AppState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class VideoViewModel : ViewModel() {
@@ -31,6 +32,7 @@ class VideoViewModel : ViewModel() {
         )
     )
     val videosFindByName = MutableLiveData<List<Video>>()
+    val isResearching = mutableStateOf(false)
 
     init {
         fetchVideos()
@@ -95,6 +97,8 @@ class VideoViewModel : ViewModel() {
 
     fun findByName(name: String) {
         viewModelScope.launch {
+            isResearching.value = true
+            delay(1000L)
             videosRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val videos = mutableListOf<Video>()
@@ -118,10 +122,12 @@ class VideoViewModel : ViewModel() {
                         }
                     }
                     videosFindByName.value = videos
+                    isResearching.value = false
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     TODO("Not yet implemented")
+
                 }
             })
         }

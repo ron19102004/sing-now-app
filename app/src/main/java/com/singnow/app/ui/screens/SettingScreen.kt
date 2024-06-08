@@ -54,6 +54,7 @@ class SettingScreen : MainLayout() {
             MaterialTheme.colorScheme.onTertiary,
             MaterialTheme.colorScheme.onTertiary,
             MaterialTheme.colorScheme.onTertiary,
+            MaterialTheme.colorScheme.onTertiary,
         )
 
         val bgColors = remember { mutableStateListOf<Color>().apply { addAll(initialColors) } }
@@ -94,7 +95,6 @@ class SettingScreen : MainLayout() {
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(10.dp))
             } else {
                 val userCurrent = authViewModel.userCurrent.value
                 SettingContainer(backgroundColor = bgColors[2]) {
@@ -122,24 +122,24 @@ class SettingScreen : MainLayout() {
             }
             if (authViewModel.isLoggedIn.value) {
                 SettingContainer(backgroundColor = bgColors[1]) {
-                    Row {
-                        TextBtn(
-                            value = "Logout", onClick = {
-                                authViewModel.logout()
-                            },
-                            modifier = Modifier.fillMaxWidth(0.5f),
-                            height = 50.dp
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        TextBtn(
-                            value = "Exit", onClick = {
-                                exitProcess(1)
-                            },
-                            modifier = Modifier.fillMaxWidth(1f),
-                            height = 50.dp
-                        )
-                    }
+                    TextBtn(
+                        value = "Logout", onClick = {
+                            authViewModel.logout()
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        height = 50.dp
+                    )
                 }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            SettingContainer(backgroundColor = bgColors[2]) {
+                TextBtn(
+                    value = "Exit", onClick = {
+                        exitProcess(1)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    height = 50.dp
+                )
             }
         }
     }
