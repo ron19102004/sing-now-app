@@ -289,13 +289,15 @@ class MediaPlayerScreen : MediaPlayerLayout() {
             onDismissRequest = { onDismissRequest() },
             sheetState = state
         ) {
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp)
             ) {
-                Heading(value = video.title, size = Constant.TextSize.MD, maxLines = 5)
-                Text(text = video.description)
+                item {
+                    Heading(value = video.title, size = Constant.TextSize.MD, maxLines = 5)
+                    Text(text = video.description)
+                }
             }
             Spacer(modifier = Modifier.height(30.dp))
         }
