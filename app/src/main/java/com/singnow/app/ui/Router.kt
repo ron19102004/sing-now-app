@@ -1,5 +1,7 @@
 package com.singnow.app.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Home
 import androidx.compose.material.icons.sharp.Settings
@@ -52,6 +54,7 @@ sealed class Router {
     ) : Router()
 }
 
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
 fun RouterSetup(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Router.HomeScreen) {

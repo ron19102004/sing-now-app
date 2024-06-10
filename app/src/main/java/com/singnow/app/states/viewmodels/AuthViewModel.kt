@@ -150,7 +150,7 @@ class AuthViewModel : ViewModel() {
                         if (key != null) {
                             val userNew = User(
                                 user?.email!!,
-                                data.newPassword,
+                                hashPassword(data.newPassword),
                                 user.firstName,
                                 user.lastName
                             )

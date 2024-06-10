@@ -56,7 +56,7 @@ class HomeScreen : MainLayout() {
                     .padding(horizontal = 20.dp)
                     .fillMaxWidth()
                     .clip(CircleShape)
-                    .height(50.dp)
+                    .height(55.dp)
                     .clickable {
                         Navigate(Router.SearchScreen)
                     },

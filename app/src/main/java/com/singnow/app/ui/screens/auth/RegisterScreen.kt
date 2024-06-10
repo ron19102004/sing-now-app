@@ -89,10 +89,10 @@ class RegisterScreen : AuthLayout() {
         ) {
             authViewModel.register(
                 data = User(
-                    email.value,
-                    password.value,
-                    firstName.value,
-                    lastName.value
+                    email.value.trim(),
+                    password.value.trim(),
+                    firstName.value.trim(),
+                    lastName.value.trim()
                 ),
                 error = {},
                 success = {

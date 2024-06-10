@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.singnow.app.R
@@ -73,7 +74,7 @@ fun VideoCard(video: Video) {
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            Text(text = video.title)
+            Text(text = video.title, maxLines = 2, overflow = TextOverflow.Ellipsis)
         }
     }
 }
